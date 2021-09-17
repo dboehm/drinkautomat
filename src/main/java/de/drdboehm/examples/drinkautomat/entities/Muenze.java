@@ -1,4 +1,4 @@
-package de.drdboehm.examples.drinkautomat;
+package de.drdboehm.examples.drinkautomat.entities;
 
 public enum Muenze {
 	CENTS_10(10),

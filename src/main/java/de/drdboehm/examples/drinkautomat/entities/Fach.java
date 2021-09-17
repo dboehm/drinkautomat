@@ -1,4 +1,6 @@
-package de.drdboehm.examples.drinkautomat;
+package de.drdboehm.examples.drinkautomat.entities;
+
+import de.drdboehm.examples.drinkautomat.businesslogic.Verkaeuflich;
 
 public class Fach {
 	private Integer id;
@@ -7,6 +9,8 @@ public class Fach {
 	private Integer spalte;
 	private Integer kapazitaet;
 	private Getraenk getraenk;
+	
+	private int menge;
 	
 	
 	
@@ -151,11 +155,31 @@ public class Fach {
 		builder.append(reihe);
 		builder.append(", spalte=");
 		builder.append(spalte);
-		builder.append(", kapazitat=");
+		builder.append(", kapazitaet=");
 		builder.append(kapazitaet);
 		builder.append(", getraenk=");
 		builder.append(getraenk);
+		builder.append(", menge=");
+		builder.append(menge);
 		builder.append("]");
 		return builder.toString();
+	}
+
+
+
+	/**
+	 * @return the menge
+	 */
+	public int getMenge() {
+		return menge;
+	}
+
+
+
+	/**
+	 * @param menge the menge to set
+	 */
+	public void setMenge(int menge) {
+		this.menge = menge;
 	}
 }
