@@ -1,20 +1,16 @@
-package de.drdboehm.examples.drinkautomat;
+package de.drdboehm.examples.drinkautomat.entities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import de.drdboehm.examples.drinkautomat.entities.Muenze;
+import de.drdboehm.examples.drinkautomat.state.WechselgeldMuenzState;
 
 public class Wechselgeld{
 	public Wechselgeld() {
 		super();
 	}
 
-	private List<WechselgeldMuenzstatus> muenzStati = new ArrayList<>();
+	private List<WechselgeldMuenzState> muenzStati = new ArrayList<>();
 	
 	private List<Muenze> zurueck = new ArrayList<>();
 	
@@ -33,14 +29,14 @@ public class Wechselgeld{
 	/**
 	 * @return the muenzStati
 	 */
-	public List<WechselgeldMuenzstatus> getMuenzStati() {
+	public List<WechselgeldMuenzState> getMuenzStati() {
 		return muenzStati;
 	}
 
 	/**
 	 * @param muenzStati the muenzStati to set
 	 */
-	public void setMuenzStati(List<WechselgeldMuenzstatus> muenzStati) {
+	public void setMuenzStati(List<WechselgeldMuenzState> muenzStati) {
 		this.muenzStati = muenzStati;
 	}
 

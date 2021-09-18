@@ -1,6 +1,6 @@
 package de.drdboehm.examples.drinkautomat.entities;
 
-import de.drdboehm.examples.drinkautomat.businesslogic.Verkaeuflich;
+import de.drdboehm.examples.drinkautomat.businesslogic.VerkaufControlLogic;
 
 public class Fach {
 	private Integer id;

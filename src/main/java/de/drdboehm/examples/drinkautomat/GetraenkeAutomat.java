@@ -7,8 +7,10 @@ import java.util.Optional;
 
 import de.drdboehm.examples.drinkautomat.businesslogic.VerkaufController;
 import de.drdboehm.examples.drinkautomat.entities.Fach;
+import de.drdboehm.examples.drinkautomat.entities.GetraenkUndWechselGeld;
 import de.drdboehm.examples.drinkautomat.entities.Muenze;
 import de.drdboehm.examples.drinkautomat.entities.Startgeld;
+import de.drdboehm.examples.drinkautomat.state.Befuellung;
 
 public class GetraenkeAutomat {
 	private static final Logger logger = LogManager.getLogger(GetraenkeAutomat.class);
@@ -26,8 +28,8 @@ public class GetraenkeAutomat {
 		}
 		automat.showFaecherByLog();
 		logger.info("{}", "Wählen Sie ein Getränk durch Eingabe der Fach-Namen");
-		String next = "A2";
-		Muenze[] muenzen = { Muenze.EURO_1};
+		String next = "B2";
+		Muenze[] muenzen = { Muenze.EURO_2};
 		Optional<Fach> fachOpt = automat.controller.getBefuellung().identifiziereFachUeberName(next);
 		if (fachOpt.isPresent() && automat.controller.istGetraenkeWunschInFachVorhanden(fachOpt.get())) {
 			Optional<GetraenkUndWechselGeld> kaufen = automat.controller.kaufen(fachOpt.get(), muenzen);

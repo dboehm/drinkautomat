@@ -1,9 +1,5 @@
 package de.drdboehm.examples.drinkautomat.entities;
 
-import de.drdboehm.examples.drinkautomat.GetraenkUndWechselGeld;
-import de.drdboehm.examples.drinkautomat.GetraenkeWunsch;
-import de.drdboehm.examples.drinkautomat.Wechselgeld;
-import de.drdboehm.examples.drinkautomat.businesslogic.Verkaeuflich;
 
 public class Getraenk {
 	private int preis;

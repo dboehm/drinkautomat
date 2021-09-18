@@ -1,4 +1,4 @@
-package de.drdboehm.examples.drinkautomat;
+package de.drdboehm.examples.drinkautomat.state;
 
 import java.util.List;
 import java.util.Optional;

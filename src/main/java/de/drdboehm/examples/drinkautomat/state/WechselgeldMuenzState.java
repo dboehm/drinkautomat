@@ -1,12 +1,12 @@
-package de.drdboehm.examples.drinkautomat;
+package de.drdboehm.examples.drinkautomat.state;
 
 import java.util.Objects;
 
 import de.drdboehm.examples.drinkautomat.entities.Muenze;
 
-public class WechselgeldMuenzstatus {
+public class WechselgeldMuenzState {
 	
-	public WechselgeldMuenzstatus(Muenze muenze, Integer benoetigt) {
+	public WechselgeldMuenzState(Muenze muenze, Integer benoetigt) {
 		super();
 		this.muenze = muenze;
 		this.benoetigt = benoetigt;
@@ -63,7 +63,7 @@ public class WechselgeldMuenzstatus {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		WechselgeldMuenzstatus other = (WechselgeldMuenzstatus) obj;
+		WechselgeldMuenzState other = (WechselgeldMuenzState) obj;
 		return muenze == other.muenze;
 	}
 

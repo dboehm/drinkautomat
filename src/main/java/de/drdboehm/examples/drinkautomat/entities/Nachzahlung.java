@@ -1,9 +1,7 @@
-package de.drdboehm.examples.drinkautomat;
+package de.drdboehm.examples.drinkautomat.entities;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.drdboehm.examples.drinkautomat.entities.Muenze;
 
 public class Nachzahlung {
 	private List<Muenze> nachzahlung = new ArrayList<>();
@@ -20,6 +18,15 @@ public class Nachzahlung {
 	 */
 	public void setNachzahlung(List<Muenze> nachzahlung) {
 		this.nachzahlung = nachzahlung;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Nachzahlung [nachzahlung=");
+		builder.append(nachzahlung);
+		builder.append("]");
+		return builder.toString();
 	}
 
 	

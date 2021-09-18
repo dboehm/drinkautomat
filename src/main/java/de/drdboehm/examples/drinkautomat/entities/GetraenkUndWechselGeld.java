@@ -1,6 +1,4 @@
-package de.drdboehm.examples.drinkautomat;
-
-import de.drdboehm.examples.drinkautomat.entities.Getraenk;
+package de.drdboehm.examples.drinkautomat.entities;
 
 public class GetraenkUndWechselGeld {
 	Getraenk getraenk;

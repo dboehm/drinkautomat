@@ -3,17 +3,17 @@ package de.drdboehm.examples.drinkautomat.businesslogic;
 import java.io.File;
 import java.util.Optional;
 
-import de.drdboehm.examples.drinkautomat.Befuellung;
-import de.drdboehm.examples.drinkautomat.GetraenkUndWechselGeld;
-import de.drdboehm.examples.drinkautomat.Wechselgeld;
 import de.drdboehm.examples.drinkautomat.entities.Fach;
+import de.drdboehm.examples.drinkautomat.entities.GetraenkUndWechselGeld;
 import de.drdboehm.examples.drinkautomat.entities.Muenze;
+import de.drdboehm.examples.drinkautomat.entities.Wechselgeld;
+import de.drdboehm.examples.drinkautomat.state.Befuellung;
 
 /**
  * @author dboehm
  *
  */
-public interface Verkaeuflich {
+public interface VerkaufControlLogic {
 		
 	/**
 	 * @param auswahl  das gewählte {@link Fach} des Automaten mit der Kaufabsicht
@@ -34,8 +34,8 @@ public interface Verkaeuflich {
 
 	Optional<Wechselgeld> checkWechselgeldVorhanden(Optional<Wechselgeld> p_wechselGeld);
 	
-	// Boolean aktualisiereStartgeldNachEinnahmeUndAusgabeMuenzen(GetraenkUndWechselGeld verkauft);
-	
-	
+	public void fuegeMuenzenZuStartgeldHinzu(Muenze[] p_einzahlung);
+
+	void entnehmeWechselgeldMuenzenAusStartgeld(GetraenkUndWechselGeld l_getraenkUndWechselgeld);
 
 }

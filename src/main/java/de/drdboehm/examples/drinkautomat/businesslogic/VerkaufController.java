@@ -19,18 +19,18 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
-import de.drdboehm.examples.drinkautomat.Befuellung;
-import de.drdboehm.examples.drinkautomat.GetraenkUndWechselGeld;
 import de.drdboehm.examples.drinkautomat.GetraenkeAutomat;
-import de.drdboehm.examples.drinkautomat.Nachzahlung;
-import de.drdboehm.examples.drinkautomat.Wechselgeld;
-import de.drdboehm.examples.drinkautomat.WechselgeldMuenzstatus;
 import de.drdboehm.examples.drinkautomat.entities.Fach;
 import de.drdboehm.examples.drinkautomat.entities.Getraenk;
+import de.drdboehm.examples.drinkautomat.entities.GetraenkUndWechselGeld;
 import de.drdboehm.examples.drinkautomat.entities.Muenze;
+import de.drdboehm.examples.drinkautomat.entities.Nachzahlung;
 import de.drdboehm.examples.drinkautomat.entities.Startgeld;
+import de.drdboehm.examples.drinkautomat.entities.Wechselgeld;
+import de.drdboehm.examples.drinkautomat.state.Befuellung;
+import de.drdboehm.examples.drinkautomat.state.WechselgeldMuenzState;
 
-public class VerkaufController implements Verkaeuflich {
+public class VerkaufController implements VerkaufControlLogic {
 
 	private static final Logger logger = LogManager.getLogger(VerkaufController.class);
 	private Befuellung befuellung;
@@ -56,12 +56,14 @@ public class VerkaufController implements Verkaeuflich {
 			if (l_differenzEinzahlungZuPreis >= 0) {
 				Optional<Wechselgeld> l_wechselGeldFürZurueckOpt = berechneWechselGeldFürZurueck(
 						l_differenzEinzahlungZuPreis);
-				GetraenkUndWechselGeld l_guW = new GetraenkUndWechselGeld(p_auswahl.getGetraenk(),
+				GetraenkUndWechselGeld l_getraenkUndWechselgeld = new GetraenkUndWechselGeld(p_auswahl.getGetraenk(),
 						l_wechselGeldFürZurueckOpt.get());
 				// vor Rückgabe entnehme Getränk aus Fach
 				entnehmeVerkaufteWareAusFach(p_auswahl);
-				
-				return Optional.of(l_guW);
+				fuegeMuenzenZuStartgeldHinzu(p_einzahlung);
+				entnehmeWechselgeldMuenzenAusStartgeld(l_getraenkUndWechselgeld);
+
+				return Optional.of(l_getraenkUndWechselgeld);
 			} else {
 				Optional<Wechselgeld> nachzahlungFürNachforderung = berechneWechselGeldFürZurueck(
 						-l_differenzEinzahlungZuPreis);
@@ -76,6 +78,36 @@ public class VerkaufController implements Verkaeuflich {
 	}
 
 	@Override
+	public void entnehmeWechselgeldMuenzenAusStartgeld(GetraenkUndWechselGeld l_getraenkUndWechselgeld) {
+		List<Startgeld> l_startgelder = befuellung.getStartgeld();
+		for (WechselgeldMuenzState l_wechselgeldMuenzstatus : l_getraenkUndWechselgeld.getZurück().getMuenzStati()){
+			Startgeld l_startgeld = new Startgeld(l_wechselgeldMuenzstatus.getMuenze(), null); 
+			if (l_startgelder.contains(l_startgeld)) {
+				l_startgeld = l_startgelder.get(l_startgelder.indexOf(l_startgeld));
+				l_startgeld.setAnzahl(l_startgeld.getAnzahl()-l_wechselgeldMuenzstatus.getBenoetigt());
+			}
+			
+		}
+
+	}
+
+	@Override
+	public void fuegeMuenzenZuStartgeldHinzu(Muenze[] p_einzahlung) {
+		List<Startgeld> l_startgelder = befuellung.getStartgeld();
+
+		for (Muenze l_muenze : p_einzahlung) {
+			Startgeld l_startgeld = new Startgeld(l_muenze, null);
+			if (l_startgelder.contains(l_startgeld)) {
+				l_startgeld = l_startgelder.get(l_startgelder.indexOf(l_startgeld));
+				l_startgeld.setAnzahl(l_startgeld.getAnzahl()+1);
+				logger.info("{}", l_startgeld);
+			}
+
+		}
+
+	}
+
+	@Override
 	public Boolean istGetraenkeWunschInFachVorhanden(Fach p_auswahl) {
 		Optional<Fach> l_fachOpt = befuellung.getFaecher().stream().filter(fach -> fach.equals(p_auswahl)).findFirst();
 		if (l_fachOpt.isPresent()) {
@@ -87,7 +119,7 @@ public class VerkaufController implements Verkaeuflich {
 	@Override
 	public Optional<Wechselgeld> checkWechselgeldVorhanden(Optional<Wechselgeld> p_wechselGeld) {
 		List<Startgeld> l_startgelder = befuellung.getStartgeld();
-		for (WechselgeldMuenzstatus l_wechWechselgeldMuenzstatus : p_wechselGeld.get().getMuenzStati()) {
+		for (WechselgeldMuenzState l_wechWechselgeldMuenzstatus : p_wechselGeld.get().getMuenzStati()) {
 			Muenze l_muenze = l_wechWechselgeldMuenzstatus.getMuenze();
 			Startgeld l_temp = new Startgeld(l_muenze, null);
 			if (l_startgelder.contains(l_temp)) {
@@ -137,7 +169,7 @@ public class VerkaufController implements Verkaeuflich {
 
 	@Override
 	public void entnehmeVerkaufteWareAusFach(Fach p_verkauft) {
-		p_verkauft.setMenge(p_verkauft.getMenge()-1);
+		p_verkauft.setMenge(p_verkauft.getMenge() - 1);
 	}
 
 	/// private Methoden
@@ -151,7 +183,7 @@ public class VerkaufController implements Verkaeuflich {
 			Muenze l_muenze = startgeld.getMuenze();
 			if (l_muenze.getValue() <= p_zurAuszahlung) {
 				p_wechselgeld.getZurueck().add(l_muenze);
-				WechselgeldMuenzstatus l_wechWechselgeldMuenzstatus = new WechselgeldMuenzstatus(l_muenze, 1);
+				WechselgeldMuenzState l_wechWechselgeldMuenzstatus = new WechselgeldMuenzState(l_muenze, 1);
 				// check if there is a MuenzStatus already
 				// if not
 				if (!p_wechselgeld.getMuenzStati().contains(l_wechWechselgeldMuenzstatus)) {
@@ -159,7 +191,7 @@ public class VerkaufController implements Verkaeuflich {
 					p_wechselgeld.getMuenzStati().add(l_wechWechselgeldMuenzstatus);
 				} else {
 					// get it
-					WechselgeldMuenzstatus l_wechselgeldMuenzstatus = p_wechselgeld.getMuenzStati()
+					WechselgeldMuenzState l_wechselgeldMuenzstatus = p_wechselgeld.getMuenzStati()
 							.get(p_wechselgeld.getMuenzStati().indexOf(l_wechWechselgeldMuenzstatus));
 					l_wechselgeldMuenzstatus.setBenoetigt(l_wechselgeldMuenzstatus.getBenoetigt() + 1);
 				}
