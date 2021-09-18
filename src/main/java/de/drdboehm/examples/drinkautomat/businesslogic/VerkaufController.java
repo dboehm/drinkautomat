@@ -71,7 +71,7 @@ public class VerkaufController implements VerkaufControlLogic {
 						-l_differenzEinzahlungZuPreis);
 				// TODO: schnelle Lösung nicht sauber OOP
 				Nachzahlung nachzahlung = new Nachzahlung();
-				nachzahlung.setNachzahlung(nachzahlungFürNachforderung.get().getZurueck());
+				nachzahlung.setNachzahlungen(nachzahlungFürNachforderung.get().getZurueck());
 				GetraenkUndWechselGeld guW = new GetraenkUndWechselGeld(p_auswahl.getGetraenk(), nachzahlung);
 				return Optional.of(guW);
 			}

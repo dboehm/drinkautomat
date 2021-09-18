@@ -1,6 +1,9 @@
 package de.drdboehm.examples.drinkautomat;
 
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.Optional;
@@ -18,15 +21,11 @@ public class GetraenkeAutomat {
 
 	private VerkaufController controller;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws URISyntaxException {
 		// TODO: implement commons CLI for Befuellungs-File (JSON)
 		GetraenkeAutomat automat = new GetraenkeAutomat();
-		try {
-			automat.controller = new VerkaufController(new File("beschickung.json"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		URL fileToRead = VerkaufController.class.getResource("beschickung.json");
+		automat.controller = new VerkaufController(new File(fileToRead.toURI()));
 		automat.showFaecherByLog();
 		logger.info("{}", "Wählen Sie ein Getränk durch Eingabe der Fach-Namen");
 		String next = "B2";

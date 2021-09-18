@@ -4,27 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Nachzahlung {
-	private List<Muenze> nachzahlung = new ArrayList<>();
+	private List<Muenze> nachzahlungen = new ArrayList<>();
 
 	/**
-	 * @return the nachzahlung
+	 * @return the nachzahlungen
 	 */
-	public List<Muenze> getNachzahlung() {
-		return nachzahlung;
+	public List<Muenze> getNachzahlungen() {
+		return nachzahlungen;
 	}
 
 	/**
-	 * @param nachzahlung the nachzahlung to set
+	 * @param nachzahlungen the nachzahlung to set
 	 */
-	public void setNachzahlung(List<Muenze> nachzahlung) {
-		this.nachzahlung = nachzahlung;
+	public void setNachzahlungen(List<Muenze> nachzahlungen) {
+		this.nachzahlungen = nachzahlungen;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Nachzahlung [nachzahlung=");
-		builder.append(nachzahlung);
+		builder.append("Nachzahlung [nachzahlungen=");
+		builder.append(nachzahlungen);
 		builder.append("]");
 		return builder.toString();
 	}
