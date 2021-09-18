@@ -94,5 +94,19 @@ public class Befuellung {
 		return faecher.stream().filter(fach -> fach.getName().equals(next)).findFirst();
 	}
 
+	/**
+	 * @return the startgeld
+	 */
+	public List<Startgeld> getStartgeld() {
+		return startgeld;
+	}
+
+	/**
+	 * @param startgeld the startgeld to set
+	 */
+	public void setStartgeld(List<Startgeld> startgeld) {
+		this.startgeld = startgeld;
+	}
+
 		
 }

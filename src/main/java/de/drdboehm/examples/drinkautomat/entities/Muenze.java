@@ -7,13 +7,14 @@ public enum Muenze {
 	EURO_1(100),
 	EURO_2(200);
 	
-	Muenze(int p_value) {
+	Muenze(Integer p_value) {
 		this.value = p_value;
 	}
 
-	public int getValue() {
+	public Integer getValue() {
 		return value;
 	}
 
-	private final int value;
+	private final Integer value;
+	
 }

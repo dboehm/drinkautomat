@@ -15,7 +15,7 @@
 			"kapazitaet": 6,
 			"getraenk": {
 				"name": "Coco Cola",
-				"preis": 120
+				"preis": 60
 			},
 			"menge": 5
 		},
@@ -56,24 +56,25 @@
 		}
 	],
 	"startgeld": [
+		
+		{
+			"muenze": "CENTS_50",
+			"anzahl": 30
+		},
+		{
+			"muenze": "CENTS_20",
+			"anzahl": 30
+		},
 		{
 			"muenze": "CENTS_10",
 			"anzahl": 30
 		},
 		{
-			"ident": "CENTS_20",
+			"muenze": "EURO_1",
 			"anzahl": 30
 		},
 		{
-			"ident": "CENTS_50",
-			"anzahl": 30
-		},
-		{
-			"ident": "EURO_1",
-			"anzahl": 30
-		},
-		{
-			"ident": "EURO_2",
+			"muenze": "EURO_2",
 			"anzahl": 30
 		}
 	]

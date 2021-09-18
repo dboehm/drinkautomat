@@ -5,10 +5,10 @@ import de.drdboehm.examples.drinkautomat.entities.Getraenk;
 public class GetraenkUndWechselGeld {
 	Getraenk getraenk;
 	Wechselgeld zurück;
-	public GetraenkUndWechselGeld(Getraenk getraenk, Wechselgeld zurück) {
+	public GetraenkUndWechselGeld(Getraenk getraenk, Wechselgeld wechselgeld) {
 		super();
 		this.getraenk = getraenk;
-		this.zurück = zurück;
+		this.zurück = wechselgeld;
 	}
 	@Override
 	public String toString() {
