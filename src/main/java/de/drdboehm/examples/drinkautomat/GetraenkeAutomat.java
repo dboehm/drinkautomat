@@ -1,21 +1,17 @@
 package de.drdboehm.examples.drinkautomat;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.Optional;
-import java.util.Scanner;
-
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 
 import de.drdboehm.examples.drinkautomat.businesslogic.VerkaufController;
 import de.drdboehm.examples.drinkautomat.entities.Fach;
-import de.drdboehm.examples.drinkautomat.entities.Getraenk;
 import de.drdboehm.examples.drinkautomat.entities.Muenze;
+import de.drdboehm.examples.drinkautomat.entities.Startgeld;
 
 public class GetraenkeAutomat {
+	private static final Logger logger = LogManager.getLogger(GetraenkeAutomat.class);
 
 	private VerkaufController controller;
 
@@ -28,25 +24,31 @@ public class GetraenkeAutomat {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		automat.show();
-		System.out.println("Wählen Sie ein Getränk durch Eingabe der Fach-Namen");
-//		try (Scanner sc = new Scanner(System.in)) {
-//			String next = sc.next();
+		automat.showFaecherByLog();
+		logger.info("{}", "Wählen Sie ein Getränk durch Eingabe der Fach-Namen");
 		String next = "A2";
+		Muenze[] muenzen = { Muenze.EURO_1};
 		Optional<Fach> fachOpt = automat.controller.getBefuellung().identifiziereFachUeberName(next);
 		if (fachOpt.isPresent() && automat.controller.istGetraenkeWunschInFachVorhanden(fachOpt.get())) {
-			Muenze[] muenzen = { Muenze.EURO_1 };
 			Optional<GetraenkUndWechselGeld> kaufen = automat.controller.kaufen(fachOpt.get(), muenzen);
-			System.out.println(kaufen.get());
+			logger.info("{}", kaufen);
+			automat.showFaecherByLog();
+			automat.showStartGeldWithLogger();
 		} else {
-			System.out.printf("Das Fach '%s' existiert nicht.%n", next);
+			logger.error("Das Fach '{}' existiert nicht.", next);
 		}
-//		}
 	}
 
-	private void show() {
+	private void showFaecherByLog() {
 		for (Fach fach : controller.getBefuellung().getFaecher()) {
-			System.out.println(fach);
+			logger.info("{}", fach);
+		}
+	}
+	
+	private void showStartGeldWithLogger() {
+		Befuellung befuellung = controller.getBefuellung();
+		for (Startgeld l_startgeld : befuellung.getStartgeld()) {
+			logger.info("{}", l_startgeld);
 		}
 	}
 }

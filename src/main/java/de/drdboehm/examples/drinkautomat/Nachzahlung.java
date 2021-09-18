@@ -22,14 +22,5 @@ public class Nachzahlung {
 		this.nachzahlung = nachzahlung;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Nachzahlung [nachzahlung=");
-		builder.append(nachzahlung);
-		builder.append("]");
-		return builder.toString();
-	}
-
 	
 }

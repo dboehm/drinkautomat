@@ -25,13 +25,17 @@ public interface Verkaeuflich {
 	
 	Boolean istGetraenkeWunschInFachVorhanden(Fach fach);
 	
-	Integer berechneDifferenzEinzahlungZuPreis(Fach auswahl, Muenze... einzahlung);
-	
-	Boolean istWechselgeldVorhanden(Wechselgeld wechselGeld);
-	
 	Optional<Wechselgeld> berechneWechselGeldFürZurueck(Integer zurAuszahlung);
 	
 		
 	Befuellung befuelleAutomat(File befuellungProperties);
+	
+	void entnehmeVerkaufteWareAusFach(Fach verkauft);
+
+	Optional<Wechselgeld> checkWechselgeldVorhanden(Optional<Wechselgeld> p_wechselGeld);
+	
+	// Boolean aktualisiereStartgeldNachEinnahmeUndAusgabeMuenzen(GetraenkUndWechselGeld verkauft);
+	
+	
 
 }

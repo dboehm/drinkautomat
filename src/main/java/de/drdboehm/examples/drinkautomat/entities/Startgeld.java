@@ -1,5 +1,7 @@
 package de.drdboehm.examples.drinkautomat.entities;
 
+import java.util.Objects;
+
 public class Startgeld implements Comparable<Startgeld>{
 
 	private Muenze muenze;
@@ -58,5 +60,24 @@ public class Startgeld implements Comparable<Startgeld>{
 	public void setAnzahl(Integer anzahl) {
 		this.anzahl = anzahl;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(muenze);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Startgeld other = (Startgeld) obj;
+		return muenze == other.muenze;
+	}
+	
+	
 
 }

@@ -30,6 +30,50 @@ public class GetraenkUndWechselGeld {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	/**
+	 * @return the getraenk
+	 */
+	public Getraenk getGetraenk() {
+		return getraenk;
+	}
+
+	/**
+	 * @param getraenk the getraenk to set
+	 */
+	public void setGetraenk(Getraenk getraenk) {
+		this.getraenk = getraenk;
+	}
+
+	/**
+	 * @return the zurück
+	 */
+	public Wechselgeld getZurück() {
+		return zurück;
+	}
+
+	/**
+	 * @param zurück the zurück to set
+	 */
+	public void setZurück(Wechselgeld zurück) {
+		this.zurück = zurück;
+	}
+
+	/**
+	 * @return the nachzahlung
+	 */
+	public Nachzahlung getNachzahlung() {
+		return nachzahlung;
+	}
+
+	/**
+	 * @param nachzahlung the nachzahlung to set
+	 */
+	public void setNachzahlung(Nachzahlung nachzahlung) {
+		this.nachzahlung = nachzahlung;
+	}
+	
+	
 	
 	
 
