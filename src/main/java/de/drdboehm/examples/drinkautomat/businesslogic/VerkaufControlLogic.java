@@ -30,6 +30,8 @@ public interface VerkaufControlLogic {
 		
 	Befuellung befuelleAutomat(File befuellungProperties);
 	
+	Kassensturz entleereAutomatMitKassensturz();
+	
 	void entnehmeVerkaufteWareAusFach(Fach verkauft);
 
 	Optional<Wechselgeld> checkWechselgeldVorhanden(Optional<Wechselgeld> p_wechselGeld);
@@ -38,4 +40,5 @@ public interface VerkaufControlLogic {
 
 	void entnehmeWechselgeldMuenzenAusStartgeld(GetraenkUndWechselGeld l_getraenkUndWechselgeld);
 
+	
 }

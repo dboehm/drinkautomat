@@ -58,9 +58,11 @@ public class VerkaufController implements VerkaufControlLogic {
 						l_differenzEinzahlungZuPreis);
 				GetraenkUndWechselGeld l_getraenkUndWechselgeld = new GetraenkUndWechselGeld(p_auswahl.getGetraenk(),
 						l_wechselGeldFürZurueckOpt.get());
-				// vor Rückgabe entnehme Getränk aus Fach
+				// vor Wechselgeld Rückgabe entnehme das Getränk aus Fach
 				entnehmeVerkaufteWareAusFach(p_auswahl);
+				// buche eingezahlte Münzen auf Startgeld
 				fuegeMuenzenZuStartgeldHinzu(p_einzahlung);
+				// buche ausgezahlte Münzen von Startgeld
 				entnehmeWechselgeldMuenzenAusStartgeld(l_getraenkUndWechselgeld);
 
 				return Optional.of(l_getraenkUndWechselgeld);
@@ -170,6 +172,13 @@ public class VerkaufController implements VerkaufControlLogic {
 	@Override
 	public void entnehmeVerkaufteWareAusFach(Fach p_verkauft) {
 		p_verkauft.setMenge(p_verkauft.getMenge() - 1);
+	}
+	
+	@Override
+	public Kassensturz entleereAutomatMitKassensturz() {
+		Kassensturz l_kassensturz = new Kassensturz(befuellung);
+		befuellung = null;
+		return l_kassensturz;
 	}
 
 	/// private Methoden

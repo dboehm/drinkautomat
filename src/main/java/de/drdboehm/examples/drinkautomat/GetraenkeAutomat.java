@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
+import de.drdboehm.examples.drinkautomat.businesslogic.Kassensturz;
 import de.drdboehm.examples.drinkautomat.businesslogic.VerkaufController;
 import de.drdboehm.examples.drinkautomat.entities.Fach;
 import de.drdboehm.examples.drinkautomat.entities.GetraenkUndWechselGeld;
@@ -36,6 +37,10 @@ public class GetraenkeAutomat {
 			logger.info("{}", kaufen);
 			automat.showFaecherByLog();
 			automat.showStartGeldWithLogger();
+			Kassensturz l_kassensturz = automat.controller.entleereAutomatMitKassensturz();
+			logger.info("{}", l_kassensturz);
+			logger.info("{}", automat.controller.getBefuellung());
+			
 		} else {
 			logger.error("Das Fach '{}' existiert nicht.", next);
 		}
