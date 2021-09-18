@@ -13,6 +13,7 @@ import com.google.gson.stream.JsonReader;
 
 import de.drdboehm.examples.drinkautomat.Befuellung;
 import de.drdboehm.examples.drinkautomat.GetraenkUndWechselGeld;
+import de.drdboehm.examples.drinkautomat.Nachzahlung;
 import de.drdboehm.examples.drinkautomat.Wechselgeld;
 import de.drdboehm.examples.drinkautomat.entities.Fach;
 import de.drdboehm.examples.drinkautomat.entities.Muenze;
@@ -24,6 +25,10 @@ public class VerkaufController implements Verkaeuflich {
 	public VerkaufController(Befuellung befuellung) {
 		super();
 		this.befuellung = befuellung;
+	}
+	
+	public VerkaufController() {
+		super();
 	}
 
 	public VerkaufController(File befuellungProperties) {
@@ -41,9 +46,12 @@ public class VerkaufController implements Verkaeuflich {
 						wechselGeldFürZurueck.get());
 				return Optional.of(guW);
 			} else {
-//				Optional<Nachzahlung> wechselGeldFürZurueck = berechneWechselGeldFürZurueck(l_differenzEinzahlungZuPreis);
-//				GetraenkUndWechselGeld guW = new GetraenkUndWechselGeld(auswahl.getGetraenk(),
-				return Optional.empty();
+				Optional<Wechselgeld> nachzahlungFürNachforderung = berechneWechselGeldFürZurueck(-l_differenzEinzahlungZuPreis);
+				// TODO: schnelle Lösung nicht OOP
+				Nachzahlung nachzahlung = new Nachzahlung();
+				nachzahlung.setNachzahlung(nachzahlungFürNachforderung.get().getZurueck());
+				GetraenkUndWechselGeld guW = new GetraenkUndWechselGeld(auswahl.getGetraenk(), nachzahlung);
+				return Optional.of(guW);
 			}
 		} else
 			return Optional.empty();

@@ -17,10 +17,10 @@ import de.drdboehm.examples.drinkautomat.entities.Muenze;
 
 public class GetraenkeAutomat {
 
-	private VerkaufController controller; 
+	private VerkaufController controller;
 
 	public static void main(String[] args) {
-		// implement commons CLI for
+		// TODO: implement commons CLI for Befuellungs-File (JSON)
 		GetraenkeAutomat automat = new GetraenkeAutomat();
 		try {
 			automat.controller = new VerkaufController(new File("beschickung.json"));
@@ -32,12 +32,15 @@ public class GetraenkeAutomat {
 		System.out.println("Wählen Sie ein Getränk durch Eingabe der Fach-Namen");
 //		try (Scanner sc = new Scanner(System.in)) {
 //			String next = sc.next();
-			Optional<Fach> fachOpt = automat.controller.getBefuellung().identifiziereFachUeberName("A1");
-			if (fachOpt.isPresent() && automat.controller.istGetraenkeWunschInFachVorhanden(fachOpt.get())) {
-				Muenze[] muenzen = {Muenze.EURO_1};
-				Optional<GetraenkUndWechselGeld> kaufen = automat.controller.kaufen(fachOpt.get(), muenzen);
-				System.out.println(kaufen.get());
-			}
+		String next = "A2";
+		Optional<Fach> fachOpt = automat.controller.getBefuellung().identifiziereFachUeberName(next);
+		if (fachOpt.isPresent() && automat.controller.istGetraenkeWunschInFachVorhanden(fachOpt.get())) {
+			Muenze[] muenzen = { Muenze.EURO_1 };
+			Optional<GetraenkUndWechselGeld> kaufen = automat.controller.kaufen(fachOpt.get(), muenzen);
+			System.out.println(kaufen.get());
+		} else {
+			System.out.printf("Das Fach '%s' existiert nicht.%n", next);
+		}
 //		}
 	}
 
