@@ -55,5 +55,15 @@ public interface VerkaufControlLogic {
 	void entnehmeWechselgeldMuenzenAusStartgeld(GetraenkUndWechselGeld l_getraenkUndWechselgeld);
 	
 	public Optional<Fach> identifiziereFachUeberName(String next); 
+	
+	/**
+	 * Der Kauf ist genau dann erfolgreich abgeschlossen, wenn wechselgeld vollstänig ausgegeben werden kann.
+	 * Nur dann wird Buchung auf der Kasse erfolgen soll, d.h. Einahmen werden verbucht, Wechselgeld verbucht, 
+	 * und Befüllung wird durch Entnahme des Getränks angepasst
+	 * TODO: in Impementierung: und wenn Aufnahmekapazität der Kasse die Aufnahme zuläßt
+	 * @param l_getraenkUndWechselgeld
+	 * @return  true, wenn erfolgreich, false wenn nicht 
+	 */
+	boolean kaufErfolgreichAbgeschlossen(GetraenkUndWechselGeld l_getraenkUndWechselgeld);
 
 }

@@ -35,7 +35,7 @@
 			"kapazitaet": 6,
 			"getraenk": {
 				"name": "Wasser medium",
-				"preis": 120
+				"preis": 160
 			},
 			"menge": 0
 		},
@@ -47,7 +47,7 @@
 			"kapazitaet": 6,
 			"getraenk": {
 				"name": "Wasser still",
-				"preis": 100
+				"preis": 160
 			},
 			"menge": 1
 		}
@@ -59,7 +59,7 @@
 		},
 		{
 			"muenze": "CENTS_20",
-			"anzahl": 2
+			"anzahl": 1
 		},
 		{
 			"muenze": "CENTS_50",

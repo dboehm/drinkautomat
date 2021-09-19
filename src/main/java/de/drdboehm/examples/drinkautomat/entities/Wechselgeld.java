@@ -53,8 +53,4 @@ public class Wechselgeld{
 	public void setZurueck(List<Muenze> zurueck) {
 		this.zurueck = zurueck;
 	}
-
-
-
-
 }

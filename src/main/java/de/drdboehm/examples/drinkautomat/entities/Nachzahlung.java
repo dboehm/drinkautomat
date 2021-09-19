@@ -3,7 +3,7 @@ package de.drdboehm.examples.drinkautomat.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Nachzahlung {
+public class Nachzahlung{
 	private List<Muenze> nachzahlungen = new ArrayList<>();
 
 	/**
@@ -28,6 +28,5 @@ public class Nachzahlung {
 		builder.append("]");
 		return builder.toString();
 	}
-
 	
 }

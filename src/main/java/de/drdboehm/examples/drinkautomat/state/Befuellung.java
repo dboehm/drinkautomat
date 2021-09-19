@@ -1,7 +1,6 @@
 package de.drdboehm.examples.drinkautomat.state;
 
 import java.util.List;
-import java.util.Optional;
 
 import de.drdboehm.examples.drinkautomat.entities.Fach;
 import de.drdboehm.examples.drinkautomat.entities.Startgeld;

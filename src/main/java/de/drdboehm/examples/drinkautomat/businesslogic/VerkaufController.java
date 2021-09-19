@@ -6,22 +6,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.Set;
-
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
-import de.drdboehm.examples.drinkautomat.GetraenkeAutomat;
 import de.drdboehm.examples.drinkautomat.entities.Fach;
-import de.drdboehm.examples.drinkautomat.entities.Getraenk;
 import de.drdboehm.examples.drinkautomat.entities.GetraenkUndWechselGeld;
 import de.drdboehm.examples.drinkautomat.entities.Muenze;
 import de.drdboehm.examples.drinkautomat.entities.Nachzahlung;
@@ -58,13 +50,14 @@ public class VerkaufController implements VerkaufControlLogic {
 						l_differenzEinzahlungZuPreis);
 				GetraenkUndWechselGeld l_getraenkUndWechselgeld = new GetraenkUndWechselGeld(p_auswahl.getGetraenk(),
 						l_wechselGeldFürZurueckOpt.get());
-				// vor Wechselgeld Rückgabe entnehme das Getränk aus Fach
-				entnehmeVerkaufteWareAusFach(p_auswahl);
-				// buche eingezahlte Münzen auf Startgeld
-				fuegeMuenzenZuStartgeldHinzu(p_einzahlung);
-				// buche ausgezahlte Münzen von Startgeld
-				entnehmeWechselgeldMuenzenAusStartgeld(l_getraenkUndWechselgeld);
-
+				if (kaufErfolgreichAbgeschlossen(l_getraenkUndWechselgeld)) {
+					// vor Wechselgeld Rückgabe entnehme das Getränk aus Fach
+					entnehmeVerkaufteWareAusFach(p_auswahl);
+					// buche eingezahlte Münzen auf Startgeld
+					fuegeMuenzenZuStartgeldHinzu(p_einzahlung);
+					// buche ausgezahlte Münzen von Startgeld
+					entnehmeWechselgeldMuenzenAusStartgeld(l_getraenkUndWechselgeld);
+				}
 				return Optional.of(l_getraenkUndWechselgeld);
 			} else {
 				Optional<Wechselgeld> nachzahlungFürNachforderung = berechneWechselGeldFürZurueck(
@@ -79,16 +72,19 @@ public class VerkaufController implements VerkaufControlLogic {
 			return Optional.empty();
 	}
 
+
+
 	@Override
 	public void entnehmeWechselgeldMuenzenAusStartgeld(GetraenkUndWechselGeld l_getraenkUndWechselgeld) {
 		List<Startgeld> l_startgelder = befuellung.getStartgeld();
-		for (WechselgeldMuenzState l_wechselgeldMuenzstatus : l_getraenkUndWechselgeld.getWechelgeld().getMuenzStati()){
-			Startgeld l_startgeld = new Startgeld(l_wechselgeldMuenzstatus.getMuenze(), null); 
+		for (WechselgeldMuenzState l_wechselgeldMuenzstatus : l_getraenkUndWechselgeld.getWechelgeld()
+				.getMuenzStati()) {
+			Startgeld l_startgeld = new Startgeld(l_wechselgeldMuenzstatus.getMuenze(), null);
 			if (l_startgelder.contains(l_startgeld)) {
 				l_startgeld = l_startgelder.get(l_startgelder.indexOf(l_startgeld));
-				l_startgeld.setAnzahl(l_startgeld.getAnzahl()-l_wechselgeldMuenzstatus.getBenoetigt());
+				l_startgeld.setAnzahl(l_startgeld.getAnzahl() - l_wechselgeldMuenzstatus.getBenoetigt());
 			}
-			
+
 		}
 
 	}
@@ -101,7 +97,7 @@ public class VerkaufController implements VerkaufControlLogic {
 			Startgeld l_startgeld = new Startgeld(l_muenze, null);
 			if (l_startgelder.contains(l_startgeld)) {
 				l_startgeld = l_startgelder.get(l_startgelder.indexOf(l_startgeld));
-				l_startgeld.setAnzahl(l_startgeld.getAnzahl()+1);
+				l_startgeld.setAnzahl(l_startgeld.getAnzahl() + 1);
 				logger.info("{}", l_startgeld);
 			}
 
@@ -161,10 +157,10 @@ public class VerkaufController implements VerkaufControlLogic {
 		}
 		return befuellung;
 	}
-	
+
 	@Override
 	public Optional<Fach> identifiziereFachUeberName(String next) {
-		return  befuellung.getFaecher().stream().filter(fach -> fach.getName().equals(next)).findFirst();
+		return befuellung.getFaecher().stream().filter(fach -> fach.getName().equals(next)).findFirst();
 	}
 
 	/**
@@ -178,7 +174,7 @@ public class VerkaufController implements VerkaufControlLogic {
 	public void entnehmeVerkaufteWareAusFach(Fach p_verkauft) {
 		p_verkauft.setMenge(p_verkauft.getMenge() - 1);
 	}
-	
+
 	@Override
 	public Kassensturz entleereAutomatMitKassensturz() {
 		Kassensturz l_kassensturz = new Kassensturz(befuellung);
@@ -227,5 +223,15 @@ public class VerkaufController implements VerkaufControlLogic {
 		}
 		int preis = p_auswahl.getGetraenk().getPreis();
 		return gezahlt - preis;
+	}
+
+	@Override
+	public boolean kaufErfolgreichAbgeschlossen(GetraenkUndWechselGeld l_getraenkUndWechselgeld) {
+		List<WechselgeldMuenzState> muenzStati = l_getraenkUndWechselgeld.getWechelgeld().getMuenzStati();
+		for (WechselgeldMuenzState wechselgeldMuenzState: muenzStati) {
+			if (!wechselgeldMuenzState.getBenoetigt().equals(wechselgeldMuenzState.getVorhanden()))
+				return false;
+		}
+		return true;
 	}
 }
