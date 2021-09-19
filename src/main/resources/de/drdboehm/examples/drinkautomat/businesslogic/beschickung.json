@@ -2,10 +2,6 @@
 	"name": "Spriting Drinks Automate",
 	"anzahl_reihen": 2,
 	"anzahl_spalten": 2,
-	"nested": {
-		"id": 42,
-		"name": "Test"
-	},
 	"faecher": [
 		{
 			"id": 1,

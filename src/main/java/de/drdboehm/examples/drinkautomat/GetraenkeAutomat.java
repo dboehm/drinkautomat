@@ -30,7 +30,7 @@ public class GetraenkeAutomat {
 		logger.info("{}", "Wählen Sie ein Getränk durch Eingabe der Fach-Namen");
 		String next = "B2";
 		Muenze[] muenzen = { Muenze.EURO_2};
-		Optional<Fach> fachOpt = automat.controller.getBefuellung().identifiziereFachUeberName(next);
+		Optional<Fach> fachOpt = automat.controller.identifiziereFachUeberName(next);
 		if (fachOpt.isPresent() && automat.controller.istGetraenkeWunschInFachVorhanden(fachOpt.get())) {
 			Optional<GetraenkUndWechselGeld> kaufen = automat.controller.kaufen(fachOpt.get(), muenzen);
 			logger.info("{}", kaufen);

@@ -53,5 +53,7 @@ public interface VerkaufControlLogic {
 	public void fuegeMuenzenZuStartgeldHinzu(Muenze[] p_einzahlung);
 
 	void entnehmeWechselgeldMuenzenAusStartgeld(GetraenkUndWechselGeld l_getraenkUndWechselgeld);
+	
+	public Optional<Fach> identifiziereFachUeberName(String next); 
 
 }

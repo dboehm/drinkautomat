@@ -89,11 +89,7 @@ public class Befuellung {
 	public void setFaecher(List<Fach> faecher) {
 		this.faecher = faecher;
 	}
-
-	public Optional<Fach> identifiziereFachUeberName(String next) {
-		return faecher.stream().filter(fach -> fach.getName().equals(next)).findFirst();
-	}
-
+	
 	/**
 	 * @return the startgeld
 	 */

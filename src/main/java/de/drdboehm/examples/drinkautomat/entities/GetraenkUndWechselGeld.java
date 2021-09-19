@@ -2,7 +2,7 @@ package de.drdboehm.examples.drinkautomat.entities;
 
 public class GetraenkUndWechselGeld {
 	Getraenk getraenk;
-	Wechselgeld zurück;
+	Wechselgeld wechelgeld;
 	
 	Nachzahlung nachzahlung;
 	public GetraenkUndWechselGeld(Getraenk getraenk, Nachzahlung nachzahlung) {
@@ -14,7 +14,7 @@ public class GetraenkUndWechselGeld {
 	public GetraenkUndWechselGeld(Getraenk getraenk, Wechselgeld wechselgeld) {
 		super();
 		this.getraenk = getraenk;
-		this.zurück = wechselgeld;
+		this.wechelgeld = wechselgeld;
 	}
 	@Override
 	public String toString() {
@@ -22,7 +22,7 @@ public class GetraenkUndWechselGeld {
 		builder.append("GetraenkUndWechselGeld [getraenk=");
 		builder.append(getraenk);
 		builder.append(", zurück=");
-		builder.append(zurück);
+		builder.append(wechelgeld);
 		builder.append(", nachzahlung=");
 		builder.append(nachzahlung);
 		builder.append("]");
@@ -43,20 +43,7 @@ public class GetraenkUndWechselGeld {
 		this.getraenk = getraenk;
 	}
 
-	/**
-	 * @return the zurück
-	 */
-	public Wechselgeld getZurück() {
-		return zurück;
-	}
-
-	/**
-	 * @param zurück the zurück to set
-	 */
-	public void setZurück(Wechselgeld zurück) {
-		this.zurück = zurück;
-	}
-
+	
 	/**
 	 * @return the nachzahlung
 	 */
@@ -69,6 +56,20 @@ public class GetraenkUndWechselGeld {
 	 */
 	public void setNachzahlung(Nachzahlung nachzahlung) {
 		this.nachzahlung = nachzahlung;
+	}
+
+	/**
+	 * @return the wechelgeld
+	 */
+	public Wechselgeld getWechelgeld() {
+		return wechelgeld;
+	}
+
+	/**
+	 * @param wechelgeld the wechelgeld to set
+	 */
+	public void setWechelgeld(Wechselgeld wechelgeld) {
+		this.wechelgeld = wechelgeld;
 	}
 	
 	

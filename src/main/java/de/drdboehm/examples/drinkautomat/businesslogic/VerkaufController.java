@@ -82,7 +82,7 @@ public class VerkaufController implements VerkaufControlLogic {
 	@Override
 	public void entnehmeWechselgeldMuenzenAusStartgeld(GetraenkUndWechselGeld l_getraenkUndWechselgeld) {
 		List<Startgeld> l_startgelder = befuellung.getStartgeld();
-		for (WechselgeldMuenzState l_wechselgeldMuenzstatus : l_getraenkUndWechselgeld.getZurück().getMuenzStati()){
+		for (WechselgeldMuenzState l_wechselgeldMuenzstatus : l_getraenkUndWechselgeld.getWechelgeld().getMuenzStati()){
 			Startgeld l_startgeld = new Startgeld(l_wechselgeldMuenzstatus.getMuenze(), null); 
 			if (l_startgelder.contains(l_startgeld)) {
 				l_startgeld = l_startgelder.get(l_startgelder.indexOf(l_startgeld));
@@ -160,6 +160,11 @@ public class VerkaufController implements VerkaufControlLogic {
 			return null;
 		}
 		return befuellung;
+	}
+	
+	@Override
+	public Optional<Fach> identifiziereFachUeberName(String next) {
+		return  befuellung.getFaecher().stream().filter(fach -> fach.getName().equals(next)).findFirst();
 	}
 
 	/**
